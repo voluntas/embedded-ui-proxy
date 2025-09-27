@@ -1,0 +1,11 @@
+[project]
+name = "embedded-web-ui"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+
+dependencies = ["aiohttp", "duckdb", "psutil"]
+
+[dependency-groups]
+dev = ["pytest", "pytest-aiohttp", "pytest-repeat", "pytest-timeout", "ruff", "ty"]

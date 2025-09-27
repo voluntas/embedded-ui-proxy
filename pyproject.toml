@@ -1,11 +1,38 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "embedded-web-ui"
-version = "0.1.0"
-description = "Add your description here"
+name = "embedded_ui_proxy"
+version = "0.0.0"
+description = "Embedded UI proxy with real-time metrics monitoring using DuckDB"
 readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 requires-python = ">=3.13"
 
 dependencies = ["aiohttp", "duckdb", "psutil"]
 
+[project.urls]
+Source = "https://github.com/voluntas/embedded-ui-proxy"
+
+[project.scripts]
+server = "embedded_ui_proxy.main:run_server"
+
 [dependency-groups]
-dev = ["pytest", "pytest-aiohttp", "pytest-repeat", "pytest-timeout", "ruff", "ty"]
+test = ["pytest", "pytest-timeout", "pytest-aiohttp", "pytest-repeat"]
+lint = ["ruff", "ty"]
+
+[tool.uv]
+package = true
+default-groups = ["test", "lint"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.setuptools]
+packages = {find = {where = ["src"]}}
+
+[tool.pytest.ini_options]
+testpaths = ["test"]

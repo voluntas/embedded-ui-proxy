@@ -1,13 +1,11 @@
 import os
 import shutil
-import sys
 import tempfile
-from pathlib import Path
 
 import pytest
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from src.main import DuckDBManager, create_app
+from embedded_ui_proxy.main import create_app
+from embedded_ui_proxy.monitor import DuckDBManager
 
 
 @pytest.fixture
@@ -46,12 +44,15 @@ async def test_query_success(aiohttp_client, app, db_manager):
 
     client = await aiohttp_client(app)
 
-    response = await client.post('/rpc', json={
-        "jsonrpc": "2.0",
-        "method": "query",
-        "params": {"sql": "SELECT * FROM test"},
-        "id": 1
-    })
+    response = await client.post(
+        "/rpc",
+        json={
+            "jsonrpc": "2.0",
+            "method": "query",
+            "params": {"sql": "SELECT * FROM test"},
+            "id": 1,
+        },
+    )
 
     assert response.status == 200
     data = await response.json()
@@ -66,12 +67,15 @@ async def test_query_success(aiohttp_client, app, db_manager):
 async def test_invalid_method(aiohttp_client, app):
     client = await aiohttp_client(app)
 
-    response = await client.post('/rpc', json={
-        "jsonrpc": "2.0",
-        "method": "invalid",
-        "params": {"sql": "SELECT 1"},
-        "id": 1
-    })
+    response = await client.post(
+        "/rpc",
+        json={
+            "jsonrpc": "2.0",
+            "method": "invalid",
+            "params": {"sql": "SELECT 1"},
+            "id": 1,
+        },
+    )
 
     assert response.status == 200
     data = await response.json()
@@ -84,25 +88,22 @@ async def test_invalid_method(aiohttp_client, app):
 async def test_missing_sql_param(aiohttp_client, app):
     client = await aiohttp_client(app)
 
-    response = await client.post('/rpc', json={
-        "jsonrpc": "2.0",
-        "method": "query",
-        "params": {},
-        "id": 1
-    })
+    response = await client.post(
+        "/rpc", json={"jsonrpc": "2.0", "method": "query", "params": {}, "id": 1}
+    )
 
     assert response.status == 200
     data = await response.json()
     assert "error" in data
     assert data["error"]["code"] == -32602
-    assert data["error"]["message"] == "Invalid params"
+    assert data["error"]["message"] == "Invalid params: 'sql' parameter is required"
 
 
 @pytest.mark.asyncio
 async def test_invalid_json(aiohttp_client, app):
     client = await aiohttp_client(app)
 
-    response = await client.post('/rpc', data="invalid json")
+    response = await client.post("/rpc", data="invalid json")
 
     assert response.status == 200
     data = await response.json()
@@ -115,12 +116,15 @@ async def test_invalid_json(aiohttp_client, app):
 async def test_query_execution_error(aiohttp_client, app):
     client = await aiohttp_client(app)
 
-    response = await client.post('/rpc', json={
-        "jsonrpc": "2.0",
-        "method": "query",
-        "params": {"sql": "SELECT * FROM non_existent_table"},
-        "id": 1
-    })
+    response = await client.post(
+        "/rpc",
+        json={
+            "jsonrpc": "2.0",
+            "method": "query",
+            "params": {"sql": "SELECT * FROM non_existent_table"},
+            "id": 1,
+        },
+    )
 
     assert response.status == 200
     data = await response.json()
@@ -156,7 +160,9 @@ def test_insert_metrics():
             assert result[0] == 1
 
             # 挿入されたデータの内容を確認
-            result = manager.conn.execute("SELECT cpu_percent, memory_percent, memory_mb FROM system_metrics").fetchone()
+            result = manager.conn.execute(
+                "SELECT cpu_percent, memory_percent, memory_mb FROM system_metrics"
+            ).fetchone()
             assert result[0] == 50.0
             assert result[1] == 60.0
             assert result[2] == 1024.0
@@ -179,7 +185,7 @@ def test_execute_query():
             result = manager.execute_query("SELECT * FROM test_table")
 
             assert result["columns"] == ["id", "name"]
-            assert result["rows"] == [(1, "test")]
+            assert result["rows"] == [[1, "test"]]
         finally:
             # 接続を閉じる
             manager.conn.close()
@@ -206,12 +212,15 @@ async def test_system_metrics_endpoint(aiohttp_client, app, db_manager):
 
     client = await aiohttp_client(app)
 
-    response = await client.post('/rpc', json={
-        "jsonrpc": "2.0",
-        "method": "query",
-        "params": {"sql": "SELECT COUNT(*) as count FROM system_metrics"},
-        "id": 1
-    })
+    response = await client.post(
+        "/rpc",
+        json={
+            "jsonrpc": "2.0",
+            "method": "query",
+            "params": {"sql": "SELECT COUNT(*) as count FROM system_metrics"},
+            "id": 1,
+        },
+    )
 
     assert response.status == 200
     data = await response.json()
@@ -237,12 +246,17 @@ async def test_complex_query(aiohttp_client, app, db_manager):
     client = await aiohttp_client(app)
 
     # 複雑なクエリを実行
-    response = await client.post('/rpc', json={
-        "jsonrpc": "2.0",
-        "method": "query",
-        "params": {"sql": "SELECT name, price FROM products WHERE price > 100 ORDER BY price DESC"},
-        "id": 1
-    })
+    response = await client.post(
+        "/rpc",
+        json={
+            "jsonrpc": "2.0",
+            "method": "query",
+            "params": {
+                "sql": "SELECT name, price FROM products WHERE price > 100 ORDER BY price DESC"
+            },
+            "id": 1,
+        },
+    )
 
     assert response.status == 200
     data = await response.json()

@@ -90,9 +90,9 @@ wheels = [
 ]
 
 [[package]]
-name = "embedded-web-ui"
-version = "0.1.0"
-source = { virtual = "." }
+name = "embedded-ui-proxy"
+version = "0.0.0"
+source = { editable = "." }
 dependencies = [
     { name = "aiohttp" },
     { name = "duckdb" },
@@ -100,13 +100,15 @@ dependencies = [
 ]
 
 [package.dev-dependencies]
-dev = [
+lint = [
+    { name = "ruff" },
+    { name = "ty" },
+]
+test = [
     { name = "pytest" },
     { name = "pytest-aiohttp" },
     { name = "pytest-repeat" },
     { name = "pytest-timeout" },
-    { name = "ruff" },
-    { name = "ty" },
 ]
 
 [package.metadata]
@@ -117,13 +119,15 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [
+lint = [
+    { name = "ruff" },
+    { name = "ty" },
+]
+test = [
     { name = "pytest" },
     { name = "pytest-aiohttp" },
     { name = "pytest-repeat" },
     { name = "pytest-timeout" },
-    { name = "ruff" },
-    { name = "ty" },
 ]
 
 [[package]]

@@ -95,5 +95,5 @@
   // 対象ファイル
   "include": ["src/**/*"],
   // 除外ファイル
-  "exclude": ["node_modules", "dist", "playwright-ct.config.ts", "src/**/*.ct.tsx"]
+  "exclude": ["node_modules", "dist"]
 }

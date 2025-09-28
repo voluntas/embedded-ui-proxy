@@ -143,6 +143,14 @@ uv run server [OPTIONS]
   --db-path PATH       DuckDB データベースパス (デフォルト: metrics.duckdb)
 ```
 
+### Tailscale を利用したアクセス制限
+
+Tailscale の IP アドレスを指定して起動することで UI へのアクセスを制限することが出来ます。
+
+```bash
+uv run server --host 100.x.y.z
+```
+
 ## ライセンス
 
 Apache License 2.0

@@ -1,0 +1,33 @@
+{
+  "private": true,
+  "name": "embedded-ui-proxy-frontend-preact",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && cp dist/index.html dist/404.html",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src/",
+    "fmt": "biome format --write src/",
+    "fmt:check": "biome format src/"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.8",
+    "@preact/preset-vite": "2.10.2",
+    "@tailwindcss/vite": "4.1.17",
+    "@types/node": "24.10.1",
+    "preact": "10.28.0",
+    "tailwindcss": "4.1.17",
+    "typescript": "5.9.3",
+    "vite": "7.2.6"
+  },
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10"
+  },
+  "dependencies": {
+    "preact-iso": "2.11.0",
+    "uplot": "1.6.32"
+  }
+}

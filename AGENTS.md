@@ -50,6 +50,6 @@ uv run ruff format
 
 - モックやスタブを絶対に使わないこと
 - `uv run pytest test/ -v` を実行すること
-- テストは Python 3.13 以降を前提とすること
+- テストは Python 3.14 以降を前提とすること
 - pytest を利用すること
 - pytest のテストは class を使わず def のみを利用すること

@@ -48,7 +48,7 @@ CLI ツールに Web UI を組み込む際、バイナリに静的ファイル�
 
 ### 必要要件
 
-- Python 3.13 以上
+- Python 3.14 以上
   - [uv](https://docs.astral.sh/uv/)
 - Node.js 24 以上
   - [pnpm](https://pnpm.io/ja/)

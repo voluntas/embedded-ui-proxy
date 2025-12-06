@@ -13,24 +13,24 @@
     "fmt:check": "biome format src/"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
-    "@tailwindcss/vite": "4.1.13",
-    "@types/node": "24.5.2",
-    "@types/react": "19.1.14",
-    "@types/react-dom": "19.1.9",
-    "@vitejs/plugin-react": "5.0.4",
-    "tailwindcss": "4.1.13",
-    "typescript": "5.9.2",
-    "vite": "7.1.7"
+    "@biomejs/biome": "2.3.8",
+    "@tailwindcss/vite": "4.1.17",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "5.1.1",
+    "tailwindcss": "4.1.17",
+    "typescript": "5.9.3",
+    "vite": "7.2.6"
   },
   "engines": {
     "node": ">=24",
     "pnpm": ">=10"
   },
   "dependencies": {
-    "react": "19.1.1",
-    "react-dom": "19.1.1",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
     "uplot": "1.6.32",
-    "wouter": "3.7.1"
+    "wouter": "3.8.1"
   }
 }

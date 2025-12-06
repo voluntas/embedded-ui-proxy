@@ -39,7 +39,9 @@ CLI ツールに Web UI を組み込む際、バイナリに静的ファイル�
 
 - [psutil](https://github.com/giampaolo/psutil) を利用したメトリクス監視ダッシュボード
 - [DuckDB](https://github.com/duckdb/duckdb) に時系列データを保存
-- [React](https://github.com/facebook/react) と [Tailwind CSS](https://tailwindcss.com/) と [wouter](https://github.com/molefrog/wouter) と [uPlot](https://github.com/leeoniya/uPlot) でリアルタイムダッシュボード
+- [Tailwind CSS](https://tailwindcss.com/) と [uPlot](https://github.com/leeoniya/uPlot) でリアルタイムダッシュボード
+  - [React](https://github.com/facebook/react) + [wouter](https://github.com/molefrog/wouter) 版 (`ui/`)
+  - [Preact](https://github.com/preactjs/preact) + [preact-iso](https://github.com/preactjs/preact-iso) 版 (`ui-preact/`)
 - [JSON-RPC 2.0 over HTTP/1.1](https://www.simple-is-better.org/json-rpc/transport_http.html)
 
 ## セットアップ
@@ -109,10 +111,20 @@ uv sync
 uv run server
 ```
 
-UI 開発サーバーの起動してください。
+UI 開発サーバーを起動してください。
+
+### React 版を使用する場合
 
 ```bash
 cd ui
+pnpm install
+pnpm dev
+```
+
+### Preact 版を使用する場合
+
+```bash
+cd ui-preact
 pnpm install
 pnpm dev
 ```

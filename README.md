@@ -113,18 +113,8 @@ uv run server
 
 UI 開発サーバーを起動してください。
 
-### React 版を使用する場合
-
 ```bash
 cd ui
-pnpm install
-pnpm dev
-```
-
-### Preact 版を使用する場合
-
-```bash
-cd ui-preact
 pnpm install
 pnpm dev
 ```

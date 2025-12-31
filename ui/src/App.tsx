@@ -1,12 +1,7 @@
-import { Route, Switch } from 'wouter'
-import { Dashboard } from './pages/Dashboard'
+import { Dashboard } from "./pages/Dashboard";
 
 function App() {
-  return (
-    <Switch>
-      <Route path="/" component={Dashboard} />
-    </Switch>
-  )
+  return <Dashboard />;
 }
 
-export default App
+export default App;

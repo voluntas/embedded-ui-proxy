@@ -1,19 +1,19 @@
-import { useState } from 'react'
-import { CustomChart } from '../components/CustomChart'
-import { SqlQueryEditor } from '../components/SqlQueryEditor'
-import { SystemMetrics } from '../components/SystemMetrics'
+import { signal } from "@preact/signals";
+import { CustomChart } from "../components/CustomChart";
+import { SqlQueryEditor } from "../components/SqlQueryEditor";
+import { SystemMetrics } from "../components/SystemMetrics";
 
-type TabType = 'metrics' | 'query' | 'chart'
+type TabType = "metrics" | "query" | "chart";
+
+const activeTab = signal<TabType>("metrics");
 
 export function Dashboard() {
-  const [activeTab, setActiveTab] = useState<TabType>('metrics')
-
   const tabClass = (tab: TabType) =>
     `px-4 py-2 font-medium rounded-t-lg transition-colors ${
-      activeTab === tab
-        ? 'bg-white text-blue-600 border-b-2 border-blue-600'
-        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-    }`
+      activeTab.value === tab
+        ? "bg-white text-blue-600 border-b-2 border-blue-600"
+        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+    }`;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -31,34 +31,34 @@ export function Dashboard() {
           <nav className="flex gap-2 px-6 pt-4">
             <button
               type="button"
-              onClick={() => setActiveTab('metrics')}
-              className={tabClass('metrics')}
+              onClick={() => (activeTab.value = "metrics")}
+              className={tabClass("metrics")}
             >
               System Metrics
             </button>
             <button
               type="button"
-              onClick={() => setActiveTab('query')}
-              className={tabClass('query')}
+              onClick={() => (activeTab.value = "query")}
+              className={tabClass("query")}
             >
               SQL Query
             </button>
             <button
               type="button"
-              onClick={() => setActiveTab('chart')}
-              className={tabClass('chart')}
+              onClick={() => (activeTab.value = "chart")}
+              className={tabClass("chart")}
             >
               Custom Chart
             </button>
           </nav>
 
           <div className="border-t">
-            {activeTab === 'metrics' && <SystemMetrics />}
-            {activeTab === 'query' && <SqlQueryEditor />}
-            {activeTab === 'chart' && <CustomChart />}
+            {activeTab.value === "metrics" && <SystemMetrics />}
+            {activeTab.value === "query" && <SqlQueryEditor />}
+            {activeTab.value === "chart" && <CustomChart />}
           </div>
         </div>
       </main>
     </div>
-  )
+  );
 }

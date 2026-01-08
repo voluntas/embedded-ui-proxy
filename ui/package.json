@@ -11,22 +11,21 @@
     "lint": "oxlint --type-aware",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {},
   "devDependencies": {
     "@preact/preset-vite": "2.10.2",
     "@preact/signals": "2.5.1",
-    "@tailwindcss/vite": "4.1.17",
-    "@types/node": "24.10.1",
-    "fast-check": "4.5.2",
-    "oxfmt": "0.21.0",
-    "oxlint": "1.36.0",
-    "oxlint-tsgolint": "0.10.0",
-    "preact": "10.28.1",
+    "@tailwindcss/vite": "4.1.18",
+    "@types/node": "25.0.3",
+    "fast-check": "4.5.3",
+    "oxfmt": "0.23.0",
+    "oxlint": "1.38.0",
+    "oxlint-tsgolint": "0.10.1",
+    "preact": "10.28.2",
     "preact-iso": "2.11.1",
-    "tailwindcss": "4.1.17",
+    "tailwindcss": "4.1.18",
     "typescript": "5.9.3",
     "uplot": "1.6.32",
-    "vite": "7.2.6"
+    "vite": "7.3.1"
   },
   "engines": {
     "node": ">=24",

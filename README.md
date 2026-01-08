@@ -32,7 +32,7 @@ CLI ツールに Web UI を組み込む際、バイナリに静的ファイル�
 ## 注意
 
 - Python や SQL は適当です
-- React や TypeScript も適当です
+- Peact や TypeScript も適当です
 - セキュリティは **まったく** 考慮していません
 
 ## 機能
@@ -40,8 +40,10 @@ CLI ツールに Web UI を組み込む際、バイナリに静的ファイル�
 - [psutil](https://github.com/giampaolo/psutil) を利用したメトリクス監視ダッシュボード
 - [DuckDB](https://github.com/duckdb/duckdb) に時系列データを保存
 - [Tailwind CSS](https://tailwindcss.com/) と [uPlot](https://github.com/leeoniya/uPlot) でリアルタイムダッシュボード
-  - [React](https://github.com/facebook/react) + [wouter](https://github.com/molefrog/wouter) 版 (`ui/`)
-  - [Preact](https://github.com/preactjs/preact) + [preact-iso](https://github.com/preactjs/preact-iso) 版 (`ui-preact/`)
+- [Preact](https://github.com/preactjs/preact) を利用した軽量フロントエンド
+  - [signals](https://github.com/preactjs/signals)
+  - [preact-iso](https://github.com/preactjs/preact-iso)
+- [Oxc](https://github.com/oxc-project/oxc)
 - [JSON-RPC 2.0 over HTTP/1.1](https://www.simple-is-better.org/json-rpc/transport_http.html)
 
 ## セットアップ
@@ -158,7 +160,7 @@ uv run server --host 100.x.y.z
 Apache License 2.0
 
 ```text
-Copyright 2025-2025, @voluntas
+Copyright 2025-2026, @voluntas
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

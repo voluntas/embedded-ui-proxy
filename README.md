@@ -40,7 +40,7 @@ CLI ツールに Web UI を組み込む際、バイナリに静的ファイル�
 - [psutil](https://github.com/giampaolo/psutil) を利用したメトリクス監視ダッシュボード
 - [DuckDB](https://github.com/duckdb/duckdb) に時系列データを保存
 - [Tailwind CSS](https://tailwindcss.com/) と [uPlot](https://github.com/leeoniya/uPlot) でリアルタイムダッシュボード
-- [Preact](https://github.com/preactjs/preact) を利用した軽量フロントエンド
+- [Preact](https://github.com/preactjs/preact)
   - [signals](https://github.com/preactjs/signals)
   - [preact-iso](https://github.com/preactjs/preact-iso)
 - [Oxc](https://github.com/oxc-project/oxc)

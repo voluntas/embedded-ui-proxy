@@ -4,14 +4,14 @@
 """
 
 import json
-import logging
 from datetime import datetime
 from decimal import Decimal
 from typing import Protocol
 
+import structlog
 from aiohttp import web
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger()
 
 
 class InvalidParamsError(Exception):
@@ -119,7 +119,7 @@ class JSONRPCHandler:
             )
 
         except Exception as e:
-            logger.error(f"RPC handler error: {e}")
+            logger.error("rpc_handler_error", error=str(e))
             return self._error_response(None, -32603, "Internal error")
 
     async def _handle_single_request(
@@ -171,13 +171,13 @@ class JSONRPCHandler:
             return {"jsonrpc": "2.0", "result": result, "id": request_id}
 
         except InvalidParamsError as e:
-            logger.error(f"Invalid params error: {e}")
+            logger.error("invalid_params_error", error=str(e))
             # 通知の場合はエラーも返さない
             if "id" not in data:
                 return None
             return self._error_dict(request_id, -32602, str(e))
         except Exception as e:
-            logger.error(f"Method execution error: {e}")
+            logger.error("method_execution_error", error=str(e))
             # 通知の場合はエラーも返さない
             if "id" not in data:
                 return None

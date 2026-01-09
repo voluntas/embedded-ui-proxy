@@ -3,18 +3,37 @@ import asyncio
 import logging
 import signal
 
+import structlog
 from aiohttp import web
 
 from .jsonrpc import InvalidParamsError, JSONRPCHandler
 from .monitor import DuckDBManager, SystemMonitor
 from .proxy import ProxyHandler
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-logger = logging.getLogger(__name__)
+
+def configure_logging(log_level: int = logging.INFO) -> None:
+    """structlog を設定する
+
+    Args:
+        log_level: ログレベル
+    """
+    structlog.configure(
+        processors=[
+            structlog.contextvars.merge_contextvars,
+            structlog.processors.add_log_level,
+            structlog.processors.StackInfoRenderer(),
+            structlog.dev.set_exc_info,
+            structlog.processors.TimeStamper(fmt="iso"),
+            structlog.dev.ConsoleRenderer(pad_level=False, pad_event=False),
+        ],
+        wrapper_class=structlog.make_filtering_bound_logger(log_level),
+        context_class=dict,
+        logger_factory=structlog.PrintLoggerFactory(),
+        cache_logger_on_first_use=True,
+    )
+
+
+logger = structlog.get_logger()
 
 
 def create_app(db_manager: DuckDBManager, remote_url: str) -> web.Application:
@@ -57,6 +76,8 @@ async def main():
 
     コマンドライン引数を解析し、サーバーとモニタリングを起動する
     """
+    configure_logging()
+
     parser = argparse.ArgumentParser(
         description="Embedded UI Proxy - Embedded UI proxy with real-time metrics monitoring using DuckDB"
     )
@@ -90,10 +111,10 @@ async def main():
     await runner.setup()
     site = web.TCPSite(runner, args.host, args.port)
 
-    logger.info(f"Starting Embedded UI Proxy on {args.host}:{args.port}")
-    logger.info(f"Proxying UI requests to {args.ui_remote_url}")
-    logger.info(f"Using database: {args.db_path}")
-    logger.info(f"Access the UI at: http://localhost:{args.port}/")
+    logger.info("starting_server", host=args.host, port=args.port)
+    logger.info("proxying_ui_requests", remote_url=args.ui_remote_url)
+    logger.info("using_database", db_path=args.db_path)
+    logger.info("access_ui", url=f"http://localhost:{args.port}/")
 
     # シャットダウンイベント (グレースフルシャットダウン用)
     shutdown_event = asyncio.Event()
@@ -111,7 +132,7 @@ async def main():
         # シャットダウンシグナルを待機
         await shutdown_event.wait()
     finally:
-        logger.info("Shutting down gracefully...")
+        logger.info("shutting_down")
         # モニタリングを停止
         monitor.stop_monitoring()
         monitor_task.cancel()
@@ -121,7 +142,7 @@ async def main():
             # タスクキャンセルは正常な動作なので無視
             pass
         await runner.cleanup()
-        logger.info("Server shutdown complete")
+        logger.info("shutdown_complete")
 
 
 def run_server():

@@ -3,12 +3,11 @@
 任意の HTTP サービスへのリバースプロキシ機能を提供
 """
 
-import logging
-
 import aiohttp
+import structlog
 from aiohttp import web
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger()
 
 
 class ProxyHandler:
@@ -69,8 +68,8 @@ class ProxyHandler:
 
                     return web.Response(body=body, status=resp.status, headers=response_headers)
             except aiohttp.ClientError as e:
-                logger.error(f"Proxy client error: {e}")
+                logger.error("proxy_client_error", error=str(e))
                 return web.Response(text=f"Proxy error: {str(e)}", status=502)
             except Exception as e:
-                logger.error(f"Proxy error: {e}")
+                logger.error("proxy_error", error=str(e))
                 return web.Response(text=f"Proxy error: {str(e)}", status=502)

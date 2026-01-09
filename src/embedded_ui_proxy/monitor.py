@@ -4,13 +4,13 @@
 """
 
 import asyncio
-import logging
 from datetime import datetime
 
 import duckdb
 import psutil
+import structlog
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger()
 
 
 class DuckDBManager:
@@ -120,9 +120,11 @@ class SystemMonitor:
                 memory_mb = memory.used / 1024 / 1024
 
                 self.db_manager.insert_metrics(cpu_percent, memory_percent, memory_mb)
-                logger.debug(f"Metrics recorded - CPU: {cpu_percent}%, Memory: {memory_percent}%")
+                logger.debug(
+                    "metrics_recorded", cpu_percent=cpu_percent, memory_percent=memory_percent
+                )
             except Exception as e:
-                logger.error(f"Error recording metrics: {e}")
+                logger.error("recording_metrics_error", error=str(e))
 
             await asyncio.sleep(interval_seconds)
 

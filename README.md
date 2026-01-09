@@ -109,8 +109,12 @@ SQL クエリの結果をカスタムチャートで可視化します。
 Python アプリケーションを起動してください。
 
 ```bash
-uv sync
-uv run server
+$ uv sync
+$ uv run server
+2026-01-09T00:08:04.748514Z [info] starting_server host=0.0.0.0 port=8080
+2026-01-09T00:08:04.748577Z [info] proxying_ui_requests remote_url=http://localhost:5173
+2026-01-09T00:08:04.748602Z [info] using_database db_path=metrics.duckdb
+2026-01-09T00:08:04.748616Z [info] access_ui url=http://localhost:8080/
 ```
 
 UI 開発サーバーを起動してください。

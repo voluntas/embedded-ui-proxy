@@ -1,6 +1,5 @@
 # Embedded UI Proxy
 
-![Static Badge](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 [![Image from Gyazo](https://i.gyazo.com/dc9a958c11734412959e175be170e4b1.jpg)](https://gyazo.com/dc9a958c11734412959e175be170e4b1)
